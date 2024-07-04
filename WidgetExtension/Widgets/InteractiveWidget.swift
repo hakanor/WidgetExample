@@ -47,20 +47,19 @@ struct InteractiveWidgetEntry: TimelineEntry {
 
 struct InteractiveWidgetEntryView : View {
     var entry: InteractiveWidgetProvider.Entry
-    var data = DataService()
 
     var body: some View {
         ZStack {
             Circle()
                 .stroke(.white.opacity(0.25), lineWidth: 15)
             
-            let pct = Double(data.progress()) / 10
+            let pct = Double(entry.value) / 10
             Circle()
                 .trim(from: 0, to: pct)
                 .stroke(.red, style: StrokeStyle(lineWidth: 15, lineCap: .round, lineJoin: .round))
                 .rotationEffect(.degrees(-90))
             VStack {
-                Text(String(data.progress()))
+                Text(String(entry.value))
                     .font(.title)
                     .bold()
             }

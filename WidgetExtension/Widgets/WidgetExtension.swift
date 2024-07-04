@@ -50,21 +50,20 @@ struct SimpleEntry: TimelineEntry {
 
 struct WidgetExtensionEntryView : View {
     var entry: Provider.Entry
-    var data = DataService()
 
     var body: some View {
         ZStack {
             Circle()
                 .stroke(.white.opacity(0.25), lineWidth: 20)
             
-            let pct = Double(data.progress()) / 10
+            let pct = Double(entry.value) / 10
             Circle()
                 .trim(from: 0, to: pct)
                 .stroke(.red, style: StrokeStyle(lineWidth: 20, lineCap: .round, lineJoin: .round))
                 .rotationEffect(.degrees(-90))
             
             VStack {
-                Text(String(data.progress()))
+                Text(String(entry.value))
                     .font(.title)
                     .bold()
             }

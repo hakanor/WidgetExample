@@ -10,23 +10,31 @@ import SwiftUI
 import WidgetKit
 
 struct DataService {
-    @AppStorage("value", store: UserDefaults(suiteName: "group.com.hakanor.InvioWidgetExample")) private var value = 0
     
+    let userDefaults = UserDefaults(suiteName: "group.com.hakanor.InvioWidgetExample")
+   
     func log() {
+        var value = progress()
+        
         if value < 10 {
             value += 1
         } else {
             value = 0
         }
+
+        userDefaults?.set(value, forKey: "value")
+        userDefaults?.synchronize()
+        
         WidgetCenter.shared.reloadAllTimelines()
     }
     
     func reset() {
-        value = 0
+        userDefaults?.set(0, forKey: "value")
+        userDefaults?.synchronize()
         WidgetCenter.shared.reloadAllTimelines()
     }
     
     func progress() -> Int {
-        return value
+        return userDefaults?.integer(forKey: "value") ?? 0
     }
 }
